@@ -80,14 +80,3 @@ class Webpage:
             index: The index of the desired window.
         """
         self.web_driver.switch_to_window(self.web_driver.window_handles[index])
-
-    def getTextInsideElement(self, xpath):
-        """Returns the text inside an element with a specified xpath.
-
-        Args:
-            xpath: The xpath of the desired element.
-
-        Returns:
-            The text inside an element whose xpath matches the user-specified xpath.
-        """
-        return self.find_element_by_xpath(xpath).text

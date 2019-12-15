@@ -10,20 +10,21 @@ def remove_words_from_text(text, words_to_remove):
     return result
 
 import csv
-from webpage import Webpage
+from pathlib import Path
 from selenium import webdriver
+from webpage import Webpage
 
-with open("webpage-info-scraper/webpage_urls.txt", "r") as webpage_urls:
-    with open('webpage-info-scraper/webpage_data.csv', "w") as webpage_data:
+with open(Path("webpage-info-scraper/webpage_urls.txt"), "r") as webpage_urls:
+    with open(Path("webpage-info-scraper/webpage_data.csv"), "w") as webpage_data:
         writer = csv.writer(webpage_data, delimiter=",")
-        web_driver = webdriver.Firefox(executable_path = "C:\Program Files\Mozilla Firefox\geckodriver.exe")
+        web_driver = webdriver.Firefox()
         webpages = []
-        """ Scrape information from webpages using URLs stored in CSV file"""
+        """Scrape information from webpages using URLs stored in CSV file"""
         for url in webpage_urls:
             webpage = Webpage(url, web_driver)
             webpages.append(webpage)
             webpage.open()
-            webpage.org_name = webpage.getTextInsideElement("//h1")
+            webpage.org_name = webpage.find_element_by_xpath("//h1").text
             print(webpage.org_name)
 
             try:
